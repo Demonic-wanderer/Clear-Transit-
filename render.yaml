@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: clear-transit
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python app.py
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEATHER_CITY
+        value: Indore
+      - key: TRAFFIC_LAT
+        value: "22.7196"
+      - key: TRAFFIC_LON
+        value: "75.8577"
+      - key: ROUTING_API_BASE
+        value: https://router.project-osrm.org
+      - key: ALERT_COOLDOWN_SECONDS
+        value: "300"

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clear-Transit Login</title>
+  <script>
+    (function () {
+      const savedTheme = localStorage.getItem("clear-transit-theme");
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = savedTheme || systemTheme;
+    }());
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/auth.css">
+</head>
+<body>
+  <main class="auth-shell">
+    <section class="auth-card">
+      <div class="auth-topbar">
+        <div class="auth-brand">Clear-Transit</div>
+        <button id="theme-toggle-btn" class="theme-toggle" type="button" aria-label="Toggle color theme">Light mode</button>
+      </div>
+      <p class="auth-subtitle">Sign in to continue.</p>
+      <div class="auth-tabs">
+        <button id="login-tab" class="auth-tab active" type="button">Login</button>
+        <button id="register-tab" class="auth-tab" type="button">Register</button>
+      </div>
+
+      <div id="auth-banner" class="auth-banner hidden"></div>
+
+      <form id="auth-form" class="auth-form">
+        <div id="name-row" class="field hidden">
+          <label for="full-name">Full name</label>
+          <input id="full-name" name="full_name" type="text" autocomplete="name" placeholder="Ram Sharma">
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" placeholder="ops@cleartransit.ai" required>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" placeholder="At least 8 characters" required>
+        </div>
+
+        <button id="submit-btn" class="primary-btn auth-submit" type="submit">Login</button>
+      </form>
+
+      <p id="auth-footer" class="auth-footer">
+        New here? <button id="switch-mode-btn" class="text-btn" type="button">Create an account</button>
+      </p>
+    </section>
+  </main>
+
+  <script src="/auth.js"></script>
+</body>
+</html>

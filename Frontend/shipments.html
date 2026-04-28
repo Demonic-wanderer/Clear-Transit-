@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clear-Transit Shipment Database</title>
+  <script>
+    (function () {
+      const savedTheme = localStorage.getItem("clear-transit-theme");
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = savedTheme || systemTheme;
+    }());
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/shipments.css">
+</head>
+<body>
+  <main class="page-shell">
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">Operations Database</p>
+        <h1>Indore Shipment Database</h1>
+        <p class="subcopy">Ten active shipments, live edits, and route actions in one place.</p>
+      </div>
+      <div class="header-actions">
+        <button id="dashboard-btn" class="ghost-btn link-btn" type="button">Dashboard</button>
+        <button id="theme-toggle-btn" class="ghost-btn" type="button">Light mode</button>
+        <button id="logout-btn" class="ghost-btn" type="button">Log out</button>
+      </div>
+    </header>
+
+    <section class="summary-grid" id="summary-grid"></section>
+
+    <section class="workspace-grid">
+      <section class="panel controls-panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">Control Desk</p>
+            <h2>Shipment Actions</h2>
+          </div>
+        </div>
+
+        <div class="toolbar">
+          <input id="search-input" class="search-input" type="search" placeholder="Search by route, shipment, hub, or cargo">
+          <div class="toolbar-actions">
+            <button id="refresh-btn" class="ghost-btn" type="button">Refresh database</button>
+            <button id="seed-btn" class="primary-btn" type="button">Restore Indore 10</button>
+          </div>
+        </div>
+
+        <div class="filter-row">
+          <button class="filter-btn active" data-filter="all" type="button">All</button>
+          <button class="filter-btn" data-filter="at-risk" type="button">At Risk</button>
+          <button class="filter-btn" data-filter="rerouted" type="button">Rerouted</button>
+          <button class="filter-btn" data-filter="stable" type="button">Stable</button>
+        </div>
+
+        <div id="page-banner" class="page-banner hidden"></div>
+
+        <form id="shipment-form" class="shipment-form">
+          <div class="form-head">
+            <div>
+              <p class="eyebrow">Editor</p>
+              <h2 id="form-title">Create Shipment</h2>
+            </div>
+            <button id="reset-form-btn" class="ghost-btn" type="button">New shipment</button>
+          </div>
+
+          <input id="route-id" name="route_id" type="hidden">
+
+          <div class="form-grid">
+            <label class="field">
+              <span>Vehicle label</span>
+              <input id="vehicle-label" name="vehicle_label" type="text" placeholder="CT-52" required>
+            </label>
+            <label class="field">
+              <span>Cargo type</span>
+              <input id="cargo-type" name="cargo_type" type="text" placeholder="Pharmaceuticals" required>
+            </label>
+            <label class="field">
+              <span>Source hub</span>
+              <select id="source" name="source" required></select>
+            </label>
+            <label class="field">
+              <span>Destination hub</span>
+              <select id="destination" name="destination" required></select>
+            </label>
+            <label class="field">
+              <span>Status</span>
+              <select id="status" name="status" required></select>
+            </label>
+            <label class="field">
+              <span>ETA (minutes)</span>
+              <input id="eta-minutes" name="eta_minutes" type="number" min="1" required>
+            </label>
+            <label class="field">
+              <span>Load (tons)</span>
+              <input id="load-tons" name="load_tons" type="number" min="0" step="0.1" required>
+            </label>
+            <label class="field">
+              <span>Cargo value (USD)</span>
+              <input id="cargo-value" name="cargo_value_usd" type="number" min="1" required>
+            </label>
+            <label class="field">
+              <span>Temperature (C)</span>
+              <input id="temperature" name="telemetry_temperature_c" type="number" step="0.1" required>
+            </label>
+            <label class="field">
+              <span>Base risk score</span>
+              <input id="base-risk" name="base_risk_score" type="number" min="0" max="100" required>
+            </label>
+          </div>
+
+          <div class="form-actions">
+            <button id="save-btn" class="primary-btn" type="submit">Save shipment</button>
+            <button id="cancel-edit-btn" class="ghost-btn" type="button">Cancel edit</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel list-panel">
+        <div class="panel-head">
+          <div>
+            <p class="eyebrow">Records</p>
+            <h2>Shipment Ledger</h2>
+          </div>
+          <span id="result-count" class="result-count">0 shipments</span>
+        </div>
+        <div id="shipments-list" class="shipments-list"></div>
+      </section>
+    </section>
+  </main>
+
+  <script src="/shipments.js"></script>
+</body>
+</html>

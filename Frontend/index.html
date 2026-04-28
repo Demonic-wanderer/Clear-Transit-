@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clear-Transit</title>
+  <script>
+    (function () {
+      const savedTheme = localStorage.getItem("clear-transit-theme");
+      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+      document.documentElement.dataset.theme = savedTheme || systemTheme;
+    }());
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5.20.0/dist/maplibre-gl.css">
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div class="page-shell">
+    <header class="app-header">
+      <h1 class="brand-mark">Clear-Transit</h1>
+      <div class="user-shell">
+        <button id="shipments-db-btn" class="ghost-btn nav-link-btn" type="button">Shipment DB</button>
+        <button id="theme-toggle-btn" class="ghost-btn theme-toggle" type="button" aria-label="Toggle color theme">Light mode</button>
+        <div class="user-chip">
+          <span class="user-chip-label">Operator</span>
+          <strong id="user-name">Operator</strong>
+        </div>
+        <button id="logout-btn" class="ghost-btn">Log out</button>
+      </div>
+    </header>
+
+    <section class="stats-grid" id="stats-grid" aria-label="Network KPIs"></section>
+
+    <section class="content-grid">
+      <article class="panel map-panel">
+        <div class="map-stage">
+          <div class="map-topbar">
+            <div>
+              <p class="panel-kicker">Live route</p>
+              <h2 id="objective">Clear route guidance</h2>
+            </div>
+            <div class="hero-actions compact-actions">
+              <button id="refresh-btn" class="primary-btn">Refresh</button>
+              <button id="auto-btn" class="ghost-btn">Auto reroute</button>
+              <span class="signal-pill" id="network-pill">Monitoring</span>
+            </div>
+          </div>
+          <div class="system-banner hidden" id="system-banner"></div>
+          <div class="nav-pill" id="nav-pill"></div>
+          <div class="focus-panel" id="focus-panel"></div>
+          <div id="map"></div>
+        </div>
+        <div class="route-chooser route-chooser-docked" id="route-chooser"></div>
+        <div class="active-brief" id="active-brief"></div>
+      </article>
+
+      <article class="panel alerts-panel">
+        <div class="panel-head">
+          <div>
+            <p class="panel-kicker">Alerts</p>
+            <h2>Recent events</h2>
+          </div>
+        </div>
+        <div id="alerts-list" class="alerts-list"></div>
+      </article>
+
+      <aside class="side-rail">
+        <article class="panel signals-panel">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">Signals</p>
+              <h2>Conditions</h2>
+            </div>
+          </div>
+          <div class="signal-stack">
+            <div class="signal-card" id="weather-card"></div>
+            <div class="signal-card" id="traffic-card"></div>
+          </div>
+        </article>
+
+        <article class="panel routes-panel">
+          <div class="panel-head">
+            <div>
+              <p class="panel-kicker">Shipments</p>
+              <h2>Watchlist</h2>
+            </div>
+          </div>
+          <div id="routes-list" class="routes-list"></div>
+        </article>
+      </aside>
+    </section>
+  </div>
+
+  <script src="https://unpkg.com/maplibre-gl@5.20.0/dist/maplibre-gl.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
